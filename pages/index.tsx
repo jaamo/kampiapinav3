@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import "tailwindcss/tailwind.css";
 
 const YOUTUBE_CHANNEL_VIDEOS: string =
   "https://www.googleapis.com/youtube/v3/search";
@@ -21,13 +22,23 @@ export default function Home({ videos }) {
   return (
     <div className="container">
       <Head>
-        <title>Kampiapina.com</title>
+        <title>Kampiapina</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
 
       <main>
-        <h1 className="title">Kampiapina videos</h1>
-        {videos.map((video) => (
+        <div className="grid h-screen w-screen place-content-center bg-apinared">
+          <video
+            autoPlay
+            muted
+            loop
+            className="w-full h-full absolute object-cover"
+          >
+            <source src="/hero2.mp4" />
+          </video>
+          <img src="/logo.png" className="relative w-96" />
+        </div>
+        {/* {videos.map((video) => (
           <p key={video.id.videoId}>
             <a
               target="_blank"
@@ -36,7 +47,7 @@ export default function Home({ videos }) {
               {video.snippet.title}
             </a>
           </p>
-        ))}
+        ))} */}
       </main>
     </div>
   );
