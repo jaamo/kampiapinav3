@@ -4,20 +4,16 @@ module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    colors: {
-      transparent: "transparent",
-      current: "currentColor",
-      black: colors.black,
-      white: colors.white,
-      gray: colors.trueGray,
-      indigo: colors.indigo,
-      red: colors.red,
-      yellow: colors.amber,
-      apinared: { light: "#911b1b", DEFAULT: "#911b1b", dark: "#911b1b" },
+    extend: {
+      fontFamily: {
+        serif: ["Rokkitt", "sans-serif"],
+      },
+      colors: {
+        apinared: { light: "#911b1b", DEFAULT: "#911b1b", dark: "#911b1b" },
+        apinayellow: { light: "#fbb405", DEFAULT: "#fbb405", dark: "#fbb405" },
+        gray: colors.coolGray,
+      },
     },
-  },
-  variants: {
-    extend: {},
   },
   plugins: [],
 };

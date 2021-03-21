@@ -1,6 +1,5 @@
 import Head from "next/head";
-import Link from "next/link";
-import "tailwindcss/tailwind.css";
+import YouTubeThumbnail from "../components/YouTubeThumbnail";
 
 const YOUTUBE_CHANNEL_VIDEOS: string =
   "https://www.googleapis.com/youtube/v3/search";
@@ -15,11 +14,12 @@ export async function getServerSideProps() {
   const videos: YouTubeVideo[] = [];
   rawVideos.items.map((video: any) => {
     if (video.id.kind == "youtube#video") {
-      console.log(video);
       videos.push({
         id: video.id.videoId,
         title: video.snippet.title,
         item: video,
+        image: video.snippet.thumbnails.high.url,
+        published: video.snippet.publishedAt,
       });
     }
   });
@@ -47,9 +47,11 @@ export async function getServerSideProps() {
   };
 }
 
-interface YouTubeVideo {
+export interface YouTubeVideo {
   id: string;
   title: string;
+  image: string;
+  published: string;
   item: any;
 }
 
@@ -66,6 +68,7 @@ interface HomeProps {
 }
 
 export default function Home(props: HomeProps) {
+  console.log(props.videos);
   return (
     <div className="container w-full max-w-none">
       <Head>
@@ -103,14 +106,17 @@ export default function Home(props: HomeProps) {
         <img src="/logo.png" className="relative w-96" />
         <h1>YouTuben kovin pyöräilykanava</h1>
       </div>
-      <div className="grid w-full place-content-center bg-black p-10">
-        <div className="video-container h-screen w-screen">
-          <iframe
-            width="640"
-            height="360"
-            src={`https://www.youtube.com/embed/${props.latestVideo.id}`}
-            frameBorder="0"
-          ></iframe>
+      <div className="w-full bg-white p-10">
+        <h1 className="color-black font-serif center font-bold text-center text-6xl mt-10">
+          Uusimmat videot
+        </h1>
+        <div className="grid relative w-full bg p-10 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {props.videos.slice(0, 8).map((video: YouTubeVideo, i: number) => (
+            <YouTubeThumbnail
+              video={video}
+              visibleOnDesktop={i >= 4}
+            ></YouTubeThumbnail>
+          ))}
         </div>
       </div>
       <div className="grid w-full bg-black p-10">

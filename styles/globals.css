@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Rokkitt";
+  src: url("/fonts/Rokkitt-Regular.ttf");
+}
+
+/* body {
+  @apply font-custom; //if u want the font globally applied
+} */
