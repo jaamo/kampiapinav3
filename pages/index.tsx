@@ -1,4 +1,5 @@
 import Head from "next/head";
+import BlogPostThumbnail from "../components/BlogPostThumbnail";
 import YouTubeThumbnail from "../components/YouTubeThumbnail";
 
 const YOUTUBE_CHANNEL_VIDEOS: string =
@@ -30,11 +31,13 @@ export async function getServerSideProps() {
   );
   const rawPosts: any = await wpRespose.json();
   const posts: BlogPost[] = [];
+  // console.log(rawPosts);
   rawPosts.map((rawPost: any) => {
     posts.push({
       id: rawPost.id,
       title: rawPost.title.rendered,
       link: rawPost.link,
+      date: rawPost.date,
     });
   });
 
@@ -55,8 +58,9 @@ export interface YouTubeVideo {
   item: any;
 }
 
-interface BlogPost {
+export interface BlogPost {
   id: string;
+  date: string;
   title: string;
   link: string;
 }
@@ -68,7 +72,7 @@ interface HomeProps {
 }
 
 export default function Home(props: HomeProps) {
-  console.log(props.videos);
+  // console.log(props.videos);
   return (
     <div className="container w-full max-w-none">
       <Head>
@@ -106,11 +110,11 @@ export default function Home(props: HomeProps) {
         <img src="/logo.png" className="relative w-96" />
         <h1>YouTuben kovin pyöräilykanava</h1>
       </div>
-      <div className="w-full bg-white p-10">
-        <h1 className="color-black font-serif center font-bold text-center text-6xl mt-10">
+      <div className="w-full bg-white p-4 sm:p-10 pb-14 sm:pb-10">
+        <h1 className="text-gray-900 font-serif center font-bold text-center text-4xl sm:text-6xl mt-10 mb-4">
           Uusimmat videot
         </h1>
-        <div className="grid relative w-full bg p-10 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid relative sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {props.videos.slice(0, 8).map((video: YouTubeVideo, i: number) => (
             <YouTubeThumbnail
               video={video}
@@ -119,19 +123,15 @@ export default function Home(props: HomeProps) {
           ))}
         </div>
       </div>
-      <div className="grid w-full bg-black p-10">
-        <h2 className="text-white">Posts</h2>
-        {props.posts.map((post: BlogPost) => (
-          <a
-            className="text-white"
-            href={post.link}
-            target="_blank"
-            rel=""
-            key={post.id}
-          >
-            {post.title}
-          </a>
-        ))}
+      <div className="grid w-full bg-black p-10 text-white font-serif">
+        <h1 className="center font-bold text-center text-4xl sm:text-6xl mt-10 mb-4">
+          Kirjoitukset
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {props.posts.map((post: BlogPost) => (
+            <BlogPostThumbnail post={post}></BlogPostThumbnail>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ export default function YouTubeThumbnail(props: YouTubeThumbnailProps) {
   return (
     <a
       key={video.id}
-      className={`rounded-xl shadow-md overflow-hidden ${
+      className={`rounded-sm shadow-md overflow-hidden ${
         visibleOnDesktop ? "hidden sm:block" : ""
       }`}
       target="_blank"
@@ -23,7 +23,7 @@ export default function YouTubeThumbnail(props: YouTubeThumbnailProps) {
         style={{ backgroundImage: `url(${video.image})`, paddingTop: "56.25%" }}
       ></div>
       <div className="p-4 font-serif">
-        <div className="text-black font-bold leading-none mb-2">
+        <div className="text-gray-900 font-bold leading-none mb-2">
           {video.title}
         </div>
         <div className="text-gray-600 text-xs">
